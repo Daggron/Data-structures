@@ -24,38 +24,23 @@ void printList(Node* head)
 	cout << endl;
 }
 
-void detectAndRemoveLoop(Node* head)
+void detectLoop(Node* head)
 {
-  if(head == NULL || head->next == NULL){
+
+  if (head == NULL || head->next == NULL){
     return ;
   }
 
-  struct Node* sp = head;
-  struct Node* fp = head;
-
-  sp = head->next;
-  fp = head->next->next;
+  struct Node * sp = head->next;
+  struct Node * fp = head->next->next;
 
   while(fp && fp->next !=NULL){
-
-      if(sp == fp){
-        break;
-      }
-
-      sp=sp->next;
-      fp=fp->next->next;
-
-  }
-
-  if(sp == fp){
-    sp = head;
-    while(sp->next !=fp->next){
-        sp = sp->next;
-        fp = fp->next;
+    if(sp == fp){
+      printf("Loop Detected");
+      return ;
     }
-
-    fp->next = NULL;
-
+    sp = sp->next;
+    fp = fp->next->next;
   }
 
 }
@@ -73,10 +58,9 @@ int main()
 	/* Create a loop for testing */
 	head->next->next->next->next->next = head->next->next;
 
-	detectAndRemoveLoop(head);
+	detectLoop(head);
 
-	printf("Linked List after removing loop \n");
-	printList(head);
+
 
 	return 0;
 }
